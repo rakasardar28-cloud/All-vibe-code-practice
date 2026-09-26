@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Merchant onboarding status</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Merchant onboarding status</h1>
+        <p>Operations view — pipeline of merchants currently in onboarding</p>
+      </div>
+      <div class="legend" aria-label="Progress bands">
+        <span><i class="swatch green"></i> &gt; 60%</span>
+        <span><i class="swatch yellow"></i> 30–60%</span>
+        <span><i class="swatch grey"></i> below 30%</span>
+      </div>
+    </header>
+    <main>
+      <section class="pipeline" id="pipeline" aria-label="Merchants by current stage"></section>
+      <section class="grid" id="cards" aria-label="Merchant cards"></section>
+      <section class="detail" id="detail" hidden></section>
+    </main>
+    <script src="./data.js"></script>
+    <script src="./score.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
