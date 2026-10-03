@@ -43,6 +43,11 @@ function thresholdValue(merchant, method, mode, asOf = SR_TODAY) {
   const configured = merchant.configuredThresholds[method];
   if (mode === "merchant_configured") return configured;
 
+  if (mode === "pg_cohort_benchmark") {
+    const cohort = PG_COHORT_BENCHMARKS[merchant.category] || PG_COHORT_BENCHMARKS._default;
+    return cohort[method] ?? configured;
+  }
+
   if (mode === "daily_avg_month") {
     const month = asOf.slice(0, 7);
     const rows = series.filter((d) => d.date.startsWith(month) && d.date <= asOf);
@@ -62,6 +67,15 @@ function thresholdValue(merchant, method, mode, asOf = SR_TODAY) {
     return avgSr(sliceWindow(series, asOf, 30)) ?? configured;
   }
   return configured;
+}
+
+function isBrandNewMerchant(merchant) {
+  return (merchant.maturityMonths || 0) < NEW_MERCHANT_MONTHS;
+}
+
+/** Product default: monthly avg; brand-new merchants → PG cohort benchmark */
+function defaultThresholdMode(merchant) {
+  return isBrandNewMerchant(merchant) ? "pg_cohort_benchmark" : "daily_avg_month";
 }
 
 function declineMix(row) {
@@ -377,7 +391,10 @@ function saveActions(merchantId, actions) {
 }
 
 function loadThresholdMode(merchantId) {
-  return localStorage.getItem(`sr_thr_mode_${merchantId}`) || "merchant_configured";
+  const saved = localStorage.getItem(`sr_thr_mode_${merchantId}`);
+  if (saved) return saved;
+  const merchant = getMerchant(merchantId);
+  return merchant ? defaultThresholdMode(merchant) : "daily_avg_month";
 }
 
 function saveThresholdMode(merchantId, mode) {

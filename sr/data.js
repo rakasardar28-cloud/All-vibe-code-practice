@@ -7,12 +7,28 @@ const SR_TODAY = "2026-10-03";
 const PAYMENT_METHODS = ["UPI", "Cards", "Netbanking", "EMI", "Wallets"];
 
 const THRESHOLD_MODES = [
-  { id: "merchant_configured", label: "Merchant-configured (default)" },
-  { id: "daily_avg_month", label: "Daily avg — current month" },
+  { id: "daily_avg_month", label: "Monthly daily avg (usual default)" },
+  { id: "pg_cohort_benchmark", label: "PG cohort benchmark (new merchants)" },
+  { id: "merchant_configured", label: "Merchant-configured" },
   { id: "daily_avg_quarter", label: "Daily avg — current quarter" },
   { id: "rolling_7d", label: "Rolling 7-day average" },
   { id: "rolling_30d", label: "Rolling 30-day average" },
 ];
+
+/** Brand-new = <6 months onboarded → default to cohort benchmark */
+const NEW_MERCHANT_MONTHS = 6;
+
+/**
+ * Category-level PG cohort SR benchmarks (India D2C Tier 1/2 festive-aware baseline).
+ * Used when merchant is brand-new and lacks a stable monthly history.
+ */
+const PG_COHORT_BENCHMARKS = {
+  Apparel: { UPI: 90, Cards: 83, Netbanking: 79, EMI: 74, Wallets: 86 },
+  Beauty: { UPI: 91, Cards: 84, Netbanking: 80, EMI: 73, Wallets: 87 },
+  "Home décor": { UPI: 89, Cards: 83, Netbanking: 80, EMI: 74, Wallets: 85 },
+  Crockery: { UPI: 88, Cards: 82, Netbanking: 78, EMI: 72, Wallets: 84 },
+  _default: { UPI: 89, Cards: 83, Netbanking: 79, EMI: 73, Wallets: 85 },
+};
 
 /** @type {Array<object>} */
 const SR_MERCHANTS = [

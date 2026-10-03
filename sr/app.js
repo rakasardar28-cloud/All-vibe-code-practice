@@ -149,6 +149,13 @@ function renderOverview(merchant) {
   const actions = loadActions(merchant.id);
   const analysis = analyzeMerchant(merchant, mode, actions);
 
+  const dropGmv = analysis.methods
+    .filter((m) => m.status.id === "DROP")
+    .reduce((s, m) => s + (m.today?.gmv || 0), 0);
+
+  const thrLabel = THRESHOLD_MODES.find((t) => t.id === mode)?.label || mode;
+  const defaultMode = defaultThresholdMode(merchant);
+
   const kpis = `
     <div class="kpi-row">
       <div class="kpi">
@@ -162,16 +169,20 @@ function renderOverview(merchant) {
         <div class="foot">${analysis.improvedCount} improved · festive window active</div>
       </div>
       <div class="kpi">
-        <div class="label">Leading · acted ≤24h</div>
-        <div class="value">${analysis.leadingOk}/${analysis.actionsOpen || 0}</div>
-        <div class="foot">Accepted actions still active</div>
+        <div class="label">GMV on DROP methods</div>
+        <div class="value" style="font-size:20px">${formatInr(dropGmv)}</div>
+        <div class="foot">Priority by instrument importance</div>
       </div>
       <div class="kpi">
-        <div class="label">Lagging · 30d SR Δ</div>
-        <div class="value" style="color:${analysis.lagging30d >= 0 ? "var(--green)" : "var(--red)"}">${
-          analysis.lagging30d == null ? "—" : `${analysis.lagging30d >= 0 ? "+" : ""}${analysis.lagging30d} pp`
+        <div class="label">Threshold mode</div>
+        <div class="value" style="font-size:15px;line-height:1.3">${escapeHtml(thrLabel)}</div>
+        <div class="foot">${
+          mode === defaultMode
+            ? isBrandNewMerchant(merchant)
+              ? "Auto: brand-new → PG cohort"
+              : "Auto: monthly daily avg"
+            : `Default would be ${escapeHtml(THRESHOLD_MODES.find((t) => t.id === defaultMode)?.label || defaultMode)}`
         }</div>
-        <div class="foot">Last 30d ${formatPct(analysis.last30)} vs prior 30d</div>
       </div>
     </div>`;
 
@@ -234,7 +245,8 @@ function renderOverview(merchant) {
     </div>
     <div class="banner festive">
       <strong>Festive context (Sept–Nov):</strong>
-      SR day-to-day noise rises with GMV. Declines often surface T+1/T+2 — act from this dashboard within 24h of viewing for the leading metric.
+      SR day-to-day noise rises with GMV. Declines often surface T+1/T+2. Wrong diagnosis? Use Request review → PG support on the method screen.
+      Leading / lagging product metrics live in the separate <a href="./ops-metrics.html">Ops &amp; PM view</a>.
     </div>
     ${
       analysis.dropCount
@@ -245,7 +257,7 @@ function renderOverview(merchant) {
     <div class="method-grid">${methodCards}</div>
     <section class="panel">
       <h2>SR trend — all enabled methods</h2>
-      <p class="sub">Success rate over recent intervals. Denominator = success + failed (BD+TD) + abandoned + pending. 3DS timeouts count as TD.</p>
+      <p class="sub">Success rate over recent intervals. SR = successful auths / total payment attempts. 3DS timeouts count as TD.</p>
       <canvas id="overviewChart" height="110" aria-label="SR trend chart"></canvas>
     </section>
     <section class="panel">

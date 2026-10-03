@@ -8,7 +8,7 @@
     <style>
       .home-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
         margin-top: 28px;
       }
@@ -30,7 +30,7 @@
       .home-card h2 {
         margin: 0 0 8px;
         color: var(--navy);
-        font-size: 20px;
+        font-size: 18px;
       }
       .home-card p {
         margin: 0;
@@ -44,7 +44,7 @@
         color: var(--teal);
         font-size: 13px;
       }
-      @media (max-width: 720px) {
+      @media (max-width: 900px) {
         .home-grid { grid-template-columns: 1fr; }
       }
     </style>
@@ -55,13 +55,14 @@
         <div class="mark">PG</div>
         <div>
           Merchant tools
-          <span>Ops onboarding · SR diagnosis</span>
+          <span>Ops onboarding · SR diagnosis · SR metrics</span>
         </div>
       </div>
       <nav aria-label="Product flows">
         <a href="./home.html" class="active">Home</a>
         <a href="./index.html">Ops onboarding</a>
         <a href="./sr/index.html">SR dashboard</a>
+        <a href="./sr/ops-metrics.html">SR metrics (Ops/PM)</a>
       </nav>
       <div class="session"><span>Prototype hub</span></div>
     </header>
@@ -70,30 +71,37 @@
       <div class="hero-copy" style="padding: 12px 0 0; max-width: 60ch">
         <div class="eyebrow">India D2C payment aggregator</div>
         <h1 style="font-size: clamp(26px, 3.5vw, 36px); margin: 0 0 10px; color: var(--navy)">
-          Choose a merchant workflow
+          Choose a workflow
         </h1>
         <p class="lead" style="margin: 0; color: var(--muted)">
-          Two prototype flows share this repo. Onboarding stays the ops pipeline view;
-          SR diagnosis is the live merchant success-rate drop &amp; corrective-action dashboard.
+          Merchant SR diagnosis is brand-facing (picker only for the prototype).
+          Leading / lagging product metrics live in a separate Ops &amp; PM view.
         </p>
       </div>
 
       <div class="home-grid">
         <a class="home-card" href="./index.html">
-          <h2>Ops — merchant onboarding status</h2>
+          <h2>Ops — merchant onboarding</h2>
           <p>
-            Internal operations view of KYC, API, settlement, test txn, and go-live progress
-            across merchants currently in the onboarding pipeline.
+            Internal pipeline of KYC, API, settlement, test txn, and go-live progress.
           </p>
-          <span class="go">Open onboarding dashboard →</span>
+          <span class="go">Open onboarding →</span>
         </a>
         <a class="home-card" href="./sr/index.html">
           <h2>Merchant — SR drop diagnosis</h2>
           <p>
-            Per payment method SR (UPI, Cards, Netbanking, EMI, Wallets) with DROP / STABLE / IMPROVED,
-            TD vs BD classification, thresholds, corrective actions, and request-review to PG support.
+            Per method SR (UPI, Cards, Netbanking, EMI, Wallets): DROP / STABLE / IMPROVED,
+            TD vs BD, thresholds, corrective actions, Request review → PG support.
           </p>
           <span class="go">Open SR dashboard →</span>
+        </a>
+        <a class="home-card" href="./sr/ops-metrics.html">
+          <h2>Ops &amp; PM — SR product metrics</h2>
+          <p>
+            Leading (acted ≤24h, not reversed) and lagging (30d SR Δ) across merchants —
+            not shown on the merchant dashboard.
+          </p>
+          <span class="go">Open metrics view →</span>
         </a>
       </div>
     </main>
