@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PG merchant tools — home</title>
+    <link rel="stylesheet" href="./sr/styles.css" />
+    <style>
+      .home-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .home-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s, border-color 0.15s;
+      }
+      .home-card:hover {
+        transform: translateY(-2px);
+        border-color: #9bb4cc;
+      }
+      .home-card h2 {
+        margin: 0 0 8px;
+        color: var(--navy);
+        font-size: 20px;
+      }
+      .home-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .home-card .go {
+        margin-top: 16px;
+        display: inline-block;
+        font-weight: 600;
+        color: var(--teal);
+        font-size: 13px;
+      }
+      @media (max-width: 720px) {
+        .home-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="app-nav">
+      <div class="brand">
+        <div class="mark">PG</div>
+        <div>
+          Merchant tools
+          <span>Ops onboarding · SR diagnosis</span>
+        </div>
+      </div>
+      <nav aria-label="Product flows">
+        <a href="./home.html" class="active">Home</a>
+        <a href="./index.html">Ops onboarding</a>
+        <a href="./sr/index.html">SR dashboard</a>
+      </nav>
+      <div class="session"><span>Prototype hub</span></div>
+    </header>
+
+    <main class="shell">
+      <div class="hero-copy" style="padding: 12px 0 0; max-width: 60ch">
+        <div class="eyebrow">India D2C payment aggregator</div>
+        <h1 style="font-size: clamp(26px, 3.5vw, 36px); margin: 0 0 10px; color: var(--navy)">
+          Choose a merchant workflow
+        </h1>
+        <p class="lead" style="margin: 0; color: var(--muted)">
+          Two prototype flows share this repo. Onboarding stays the ops pipeline view;
+          SR diagnosis is the live merchant success-rate drop &amp; corrective-action dashboard.
+        </p>
+      </div>
+
+      <div class="home-grid">
+        <a class="home-card" href="./index.html">
+          <h2>Ops — merchant onboarding status</h2>
+          <p>
+            Internal operations view of KYC, API, settlement, test txn, and go-live progress
+            across merchants currently in the onboarding pipeline.
+          </p>
+          <span class="go">Open onboarding dashboard →</span>
+        </a>
+        <a class="home-card" href="./sr/index.html">
+          <h2>Merchant — SR drop diagnosis</h2>
+          <p>
+            Per payment method SR (UPI, Cards, Netbanking, EMI, Wallets) with DROP / STABLE / IMPROVED,
+            TD vs BD classification, thresholds, corrective actions, and request-review to PG support.
+          </p>
+          <span class="go">Open SR dashboard →</span>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>
