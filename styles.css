@@ -20,6 +20,26 @@ body {
   color: var(--ink);
 }
 
+.flow-nav {
+  background: #0f2a44;
+  display: flex;
+  gap: 6px;
+  padding: 8px 28px;
+  flex-wrap: wrap;
+}
+.flow-nav a {
+  color: #d5e2ef;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.flow-nav a:hover,
+.flow-nav a.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 .topbar {
   background: var(--navy);
   color: #fff;

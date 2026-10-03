@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SR diagnosis — merchant dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header class="app-nav">
+      <div class="brand">
+        <div class="mark">PG</div>
+        <div>
+          SR diagnosis
+          <span>India D2C payment success rate</span>
+        </div>
+      </div>
+      <nav aria-label="Product flows">
+        <a href="../home.html">Home</a>
+        <a href="../index.html">Ops onboarding</a>
+        <a href="./index.html" class="active">SR dashboard</a>
+        <a href="./ops-metrics.html">SR metrics (Ops/PM)</a>
+      </nav>
+      <div class="session" id="navSession"></div>
+    </header>
+
+    <main class="shell" id="app"></main>
+    <div id="modalRoot"></div>
+    <div id="toastRoot"></div>
+
+    <script src="./data.js"></script>
+    <script src="./logic.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
